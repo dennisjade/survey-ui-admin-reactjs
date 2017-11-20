@@ -1,0 +1,49 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+}
+
+#components-layout-demo-fixed .logo {
+  width: 120px;
+  height: 31px;
+  background: #333;
+  border-radius: 6px;
+  margin: 16px 24px 16px 0;
+  float: left;
+}
+
+.responseDate .ant-form-item-control-wrapper, .submissionDate .ant-form-item-control-wrapper, .username ant-input {
+  display: inline-block;
+}
+
+.responseDate .ant-btn, .submissionDate .ant-btn {
+  margin-left: 10px;
+  top: 1px;
+}
+
+.username .ant-btn {
+  margin-left: 10px;
+  top: 1px;
+}
+
+.filterForm .ant-btn-primary {
+  display: none;
+}
+
+.loading {
+  text-align: center;
+  background: rgba(0,0,0,0.05);
+  border-radius: 4px;
+  margin-bottom: 20px;
+  padding: 30px 50px;
+  margin: 20px 0;
+}
+
+.btnMargin {
+  margin-left: 10px;
+}
+
+.addUserForm .ant-btn-primary {
+  display: none;
+}
