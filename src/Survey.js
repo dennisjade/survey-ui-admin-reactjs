@@ -36,7 +36,7 @@ export class SurveyTable extends Component {
       respDTStart: '2015-12-01',
       respDTEnd: '2015-12-07',
       username: '',
-      hideShow: 'none',
+      loading: false,
       totalResponses: 0,
       currentPage: 1,
       data: [],
@@ -71,7 +71,7 @@ export class SurveyTable extends Component {
   searchSubmission = () => {
     let url = _baseUrl + '/survey/response';
     this.setState({
-      hideShow: 'display'
+      loading: true
     });
     axios.get(url, {
       params: {
@@ -84,11 +84,12 @@ export class SurveyTable extends Component {
       }
     })
       .then( response => {
+        this.handleCancel();
         this.setState({
           data: response.data.data.doc,
           totalResponses: response.data.data.total,
           currentPage: response.data.data.currentPage,
-          hideShow: 'none'
+          loading: false
         });
         if (response.data.data.doc.length > 0) {
           this.setState({
@@ -319,9 +320,6 @@ export class SurveyTable extends Component {
           onCancel={this.handleCancel}
           width={650}
         >
-          <div className="loading" style={{display:this.state.hideShow}} >
-            <Spin />
-          </div>
           <Form>
             <FormItem {...formItemLayout} className="submissionDate" label="Submission Date">
               <RangePicker onChange={this.handleChangeStartSubsDate} defaultValue={[moment('2015-12-01'),moment('2015-12-07')]} />
@@ -338,20 +336,22 @@ export class SurveyTable extends Component {
           </Form>
         </Modal>
 
-        <Table rowSelection={rowSelection}
-               columns={columns}
-               dataSource={this.state.data}
-               pagination={false}
-               rowKey="_id"
-        />
+        <Spin spinning={this.state.loading} >
+          <Table rowSelection={rowSelection}
+                 columns={columns}
+                 dataSource={this.state.data}
+                 pagination={false}
+                 rowKey="_id"
+          />
 
-        <Pagination
-          total={this.state.totalResponses}
-          current={this.state.currentPage}
-          pageSize={10}
-          defaultCurrent={1}
-          onChange={this.handlePageChange}
-        />
+          <Pagination
+            total={this.state.totalResponses}
+            current={this.state.currentPage}
+            pageSize={10}
+            defaultCurrent={1}
+            onChange={this.handlePageChange}
+          />
+        </Spin>
       </div>
     )
   }
